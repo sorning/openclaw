@@ -1,0 +1,24 @@
+services:
+  openclaw-gateway:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw-gateway
+    restart: unless-stopped
+
+    user: "0:0"
+
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - ./data:/home/node/.openclaw
+      - ./workspace:/home/node/.openclaw/workspace
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - NODE_ENV=production
+      # - OPENCLAW_GATEWAY_TRUSTED_PROXIES=172.16.0.0/12,127.0.0.1,10.0.0.0/8
+      - OPENCLAW_GATEWAY_TRUSTED_PROXIES=0.0.0.0/0
+    # 强制指定端口
+    command: ["node", "openclaw.mjs", "gateway", "--port", "${PORT}", "--allow-unconfigured", "--bind", "lan", "--token", "${OPENCLAW_GATEWAY_TOKEN}"]
+   
+    
