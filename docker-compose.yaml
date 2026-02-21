@@ -9,8 +9,8 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      - ./data:/home/node/.openclaw
-      - ./workspace:/home/node/.openclaw/workspace
+      - ./data:/root/.openclaw
+      - ./workspace:/root/.openclaw/workspace
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       # - OPENAI_API_BASE=${OPENAI_API_BASE}
